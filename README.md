@@ -34,6 +34,7 @@ in Ruby Script
 
 ```ruby
 queries = RedashExporter::Queries.new 'https://your-redash-host.example/your_path', 'your_api_key', 'export_path'
+queries.fetch
 queries.export_all
 
 # filter

@@ -17,7 +17,7 @@ module RedashExporter
       @url = "#{@url}/" unless @url.end_with?('/')
       @api_key = api_key
       @dest = dest
-      fetch
+      @queries = []
     end
 
     def export_all
@@ -38,14 +38,36 @@ module RedashExporter
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
 
-      req = Net::HTTP::Get.new(uri.path, header)
-      res = http.request(req)
-      body = JSON.parse(res.body, symbolize_names: true)
-      @queries = if body.is_a?(Array)
-                   body.map { |q| Query.new(q) }
-                 elsif body.is_a?(Hash)
-                   body[:results].map { |q| Query.new(q) }
-                 end
+      page = 1
+      page_size = 250
+
+      loop do
+        uri.query = "page=#{page}&page_size=#{page_size}"
+        req = Net::HTTP::Get.new(uri.to_s, header)
+        res = http.request(req)
+        body = JSON.parse(res.body, symbolize_names: true)
+
+        raise "Failed to fetch queries. URI: #{uri}" unless res.is_a?(Net::HTTPSuccess)
+
+        # old API returns all queries as an array
+        if body.is_a?(Array)
+          @queries = body.map { |q| Query.new(q) }
+          break
+        end
+
+        # new API
+        @queries.push(*body[:results].map { |q| Query.new(q) })
+
+        # next page
+        if @queries.size < body[:count]
+          page += 1
+          # wait...
+          sleep 0.5
+          next
+        end
+
+        break
+      end
     end
 
     def reject!(*args, &block)

@@ -5,4 +5,5 @@ require 'optparse'
 
 params = ARGV.getopts('', 'redash-url:', 'api-key:', "dest:#{Dir.pwd}")
 queries = RedashExporter::Queries.new(params['redash-url'], params['api-key'], params['dest'])
+queries.fetch
 queries.export_all
