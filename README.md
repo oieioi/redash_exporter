@@ -21,11 +21,11 @@ Or install it yourself as:
 Shell
 
 ```bash
-$ REDASH_API_KEY=xxx REDASH_URI=http://xxxx.invalid redash_exporter
+$ REDASH_EXPORT_DIR=dest REDASH_API_KEY=xxx REDASH_URI=http://xxxx.invalid/ redash_exporter
 ```
 
 ```ruby
-exporter = RedashExporter::Queries.new
+exporter = RedashExporter::Queries.nerbw
 exporter.export
 ```
 
