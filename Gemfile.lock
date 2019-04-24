@@ -3,6 +3,7 @@ PATH
   specs:
     redash_exporter (0.1.0)
       activesupport
+      zaru
 
 GEM
   remote: https://rubygems.org/
@@ -35,6 +36,7 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    zaru (0.3.0)
 
 PLATFORMS
   ruby

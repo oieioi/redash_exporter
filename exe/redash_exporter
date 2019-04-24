@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'redash_exporter'
+
+queries = RedashExporter::Queries.new
+queries.export

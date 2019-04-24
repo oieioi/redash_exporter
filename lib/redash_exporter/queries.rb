@@ -1,12 +1,15 @@
 require 'net/https'
 require 'json'
+require 'forwardable'
 require 'active_support'
 require 'active_support/core_ext'
-require 'byebug'
+require 'redash_exporter/query'
 
 module RedashExporter
-  class Exporter
+  class Queries
+    extend Forwardable
     attr_accessor :api_key, :url, :queries
+    def_delegators @queries, :each
 
     def initialize(api_key: ENV['REDASH_API_KEY'], url: ENV['REDASH_URI'])
       @api_key = api_key
@@ -14,15 +17,16 @@ module RedashExporter
       fetch
     end
 
-    def export
+    def export(dir = "#{__dir__}/../../dest")
+      dest_dir_path = File.expand_path(dir)
       @queries.each do |query|
-        
-
+        query.export(dest_dir_path)
       end
     end
 
     def sort_by(column_name)
-      @queries.sort { |q| q[column_name.to_s].presence || 0 }
+      @queries.each { |q| q.sort_key = column_name }
+      @queries.sort
     end
 
     def sort_by!(column_name)
@@ -38,7 +42,8 @@ module RedashExporter
       res = Net::HTTP.start(uri.host, uri.port) { |http|
         http.request(req)
       }
-      @queries = JSON.parse(res.body)
+
+      @queries = JSON.parse(res.body).map { |q| Query.new(q) }
     end
   end
 end

@@ -18,6 +18,15 @@ Or install it yourself as:
 
 ## Usage
 
+```bash
+$ REDASH_API_KEY=xxx REDASH_URI=http://xxxx.invalid bundle exec bin/console
+```
+
+```ruby
+exporter = RedashExporter::Queries.new
+exporter.export
+```
+
 
 ## Development
 
