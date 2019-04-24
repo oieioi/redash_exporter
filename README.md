@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/redash_exporter.svg)](https://badge.fury.io/rb/redash_exporter)
+
 # RedashExporter
 
 This gem is inspired by [Redash Query Export Tool](https://gist.github.com/arikfr/598590356c4da18be976)
