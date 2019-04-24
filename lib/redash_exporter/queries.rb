@@ -11,17 +11,22 @@ module RedashExporter
     attr_accessor :api_key, :url, :queries
     def_delegators @queries, :each
 
-    def initialize(api_key: ENV['REDASH_API_KEY'], url: ENV['REDASH_URI'])
+    def initialize(api_key, url, dest = "#{__dir__}/../../dest")
       @api_key = api_key
       @url = url
+      @url = "#{@url}/" unless @url.end_with?('/')
+      @dest = dest
       fetch
     end
 
-    def export(dir = "#{__dir__}/../../dest")
-      dest_dir_path = File.expand_path(dir)
+    def export
+      dest_dir_path = File.expand_path(@dest)
+      puts "Export SQL Files to #{dest_dir_path}"
+
       @queries.each do |query|
         query.export(dest_dir_path)
       end
+      puts "done. Check out #{dest_dir_path}"
     end
 
     def sort_by(column_name)
@@ -34,16 +39,21 @@ module RedashExporter
     end
 
     def fetch
-      uri = URI.parse("#{@url}/api/queries")
+      uri = URI.parse("#{@url}api/queries")
       header = {
         Authorization: "Key #{@api_key}"
       }
-      req = Net::HTTP::Get.new(uri.path, header)
-      res = Net::HTTP.start(uri.host, uri.port) { |http|
-        http.request(req)
-      }
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true if uri.scheme == 'https'
 
-      @queries = JSON.parse(res.body).map { |q| Query.new(q) }
+      req = Net::HTTP::Get.new(uri.path, header)
+      res = http.request(req)
+      body = JSON.parse(res.body)
+      @queries = if body.is_a?(Array)
+                   body.map { |q| Query.new(q) }
+                 elsif body.is_a?(Hash)
+                   body['results'].map { |q| Query.new(q) }
+                 end
     end
   end
 end

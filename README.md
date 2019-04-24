@@ -18,8 +18,10 @@ Or install it yourself as:
 
 ## Usage
 
+Shell
+
 ```bash
-$ REDASH_API_KEY=xxx REDASH_URI=http://xxxx.invalid bundle exec bin/console
+$ REDASH_API_KEY=xxx REDASH_URI=http://xxxx.invalid redash_exporter
 ```
 
 ```ruby

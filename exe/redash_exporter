@@ -2,5 +2,9 @@
 
 require 'redash_exporter'
 
-queries = RedashExporter::Queries.new
+api_key = ENV['REDASH_API_KEY']
+url = ENV['REDASH_URI']
+dest = ENV['REDASH_EXPORT_DIR'] || Dir.pwd
+
+queries = RedashExporter::Queries.new(api_key, url, dest)
 queries.export

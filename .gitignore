@@ -10,3 +10,5 @@
 /dest/
 
 .rspec_status
+.byebug_history
+*.sql
