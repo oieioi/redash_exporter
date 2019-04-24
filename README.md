@@ -24,9 +24,17 @@ Shell
 $ REDASH_EXPORT_DIR=dest REDASH_API_KEY=xxx REDASH_URI=http://xxxx.invalid/ redash_exporter
 ```
 
+Ruby Script
+
 ```ruby
 exporter = RedashExporter::Queries.nerbw
-exporter.export
+exporter.export_all
+
+# filter
+exporter
+  .reject! { |query| query['retrieved_at'].nil? }
+  .reject! { |qeury| query['retrieved_at'].to_time < 3.months.ago }
+  .export_all
 ```
 
 

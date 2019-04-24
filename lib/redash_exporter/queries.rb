@@ -8,8 +8,9 @@ require 'redash_exporter/query'
 module RedashExporter
   class Queries
     extend Forwardable
+    include Enumerable
     attr_accessor :api_key, :url, :queries
-    def_delegators @queries, :each
+    def_delegators :@queries, :each, :size
 
     def initialize(api_key, url, dest = "#{__dir__}/../../dest")
       @api_key = api_key
@@ -19,7 +20,7 @@ module RedashExporter
       fetch
     end
 
-    def export
+    def export_all
       dest_dir_path = File.expand_path(@dest)
       puts "Export SQL Files to #{dest_dir_path}"
 
@@ -27,15 +28,6 @@ module RedashExporter
         query.export(dest_dir_path)
       end
       puts "done. Check out #{dest_dir_path}"
-    end
-
-    def sort_by(column_name)
-      @queries.each { |q| q.sort_key = column_name }
-      @queries.sort
-    end
-
-    def sort_by!(column_name)
-      @queries = sort_by(column_name)
     end
 
     def fetch
@@ -48,12 +40,20 @@ module RedashExporter
 
       req = Net::HTTP::Get.new(uri.path, header)
       res = http.request(req)
-      body = JSON.parse(res.body)
+      body = JSON.parse(res.body, symbolize_names: true)
       @queries = if body.is_a?(Array)
                    body.map { |q| Query.new(q) }
                  elsif body.is_a?(Hash)
-                   body['results'].map { |q| Query.new(q) }
+                   body[:results].map { |q| Query.new(q) }
                  end
+    end
+
+    def reject!(*args, &block)
+      @queries = reject(*args, &block)
+    end
+
+    def select!(*args, &block)
+      @queries = select(*args, &block)
     end
   end
 end

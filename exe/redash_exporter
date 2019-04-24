@@ -7,4 +7,4 @@ url = ENV['REDASH_URI']
 dest = ENV['REDASH_EXPORT_DIR'] || Dir.pwd
 
 queries = RedashExporter::Queries.new(api_key, url, dest)
-queries.export
+queries.export_all
