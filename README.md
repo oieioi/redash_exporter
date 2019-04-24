@@ -1,5 +1,7 @@
 # RedashExporter
 
+This gem is inspired by [Redash Query Export Tool](https://gist.github.com/arikfr/598590356c4da18be976)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -20,21 +22,28 @@ Or install it yourself as:
 
 Shell
 
-```bash
-$ REDASH_EXPORT_DIR=dest REDASH_API_KEY=xxx REDASH_URI=http://xxxx.invalid/ redash_exporter
-```
+    $ redash_exporter --redash-url "http://your-redash-domain.example/<slug>" --api-key="your_api_key"
 
-Ruby Script
+With destination path
+
+    $ redash_exporter --redash-url "http://your-redash-domain.example/<slug>" --api-key="your_api_key" --dest=destination_directory
+
+in Ruby Script
 
 ```ruby
-exporter = RedashExporter::Queries.nerbw
-exporter.export_all
+queries = RedashExporter::Queries.new 'https://your-redash-host.example/your_path', 'your_api_key', 'export_path'
+queries.export_all
 
 # filter
-exporter
+queries
   .reject! { |query| query['retrieved_at'].nil? }
   .reject! { |qeury| query['retrieved_at'].to_time < 3.months.ago }
   .export_all
+
+# OR
+queries
+  .reject { |query| query[:retrieved_at].nil? }
+  .each(&:export)
 ```
 
 

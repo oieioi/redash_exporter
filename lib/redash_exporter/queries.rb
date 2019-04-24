@@ -12,10 +12,10 @@ module RedashExporter
     attr_accessor :api_key, :url, :queries
     def_delegators :@queries, :each, :size
 
-    def initialize(api_key, url, dest = "#{__dir__}/../../dest")
-      @api_key = api_key
+    def initialize(url, api_key, dest = "#{__dir__}/../../dest")
       @url = url
       @url = "#{@url}/" unless @url.end_with?('/')
+      @api_key = api_key
       @dest = dest
       fetch
     end
