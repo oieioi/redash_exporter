@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    redash_exporter (0.2.1)
+    redash_exporter (0.3.0)
       activesupport (~> 5.2.3)
       zaru (~> 0.1.0)
 
