@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "bundler/setup"
 require "redash_exporter"
 
@@ -11,4 +13,9 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+end
+
+def query_json
+  path = File.expand_path('./data/query.json', __dir__)
+  File.read(path)
 end

@@ -1,0 +1,46 @@
+{
+  "latest_query_data_id": 42,
+  "schedule": null,
+  "is_archived": false,
+  "retrieved_at": "2019-04-24T01:30:35.622157+00:00",
+  "updated_at": "2019-04-24T01:31:39.791996+00:00",
+  "user": {
+    "auth_type": "password",
+    "created_at": "2016-10-28T12:00:55.864333+00:00",
+    "name": "Developer",
+    "gravatar_url": "https://www.gravatar.com.example/avatar/example?s=40",
+    "updated_at": "2016-12-01T07:54:10.297104+00:00",
+    "id": 42,
+    "groups": [4, 2],
+    "email": "developer@example.com"
+  },
+  "query": "select * from mail_logs where company_id = {{company_id}} order by id desc",
+  "id": 424,
+  "description": "Test Query",
+  "runtime": 4.24,
+  "name": "Test Query",
+  "created_at": "2019-04-24T01:31:39.791956+00:00",
+  "last_modified_by": {
+    "auth_type": "password",
+    "created_at": "2016-10-28T12:00:55.864333+00:00",
+    "name": "Developer",
+    "gravatar_url": "https://www.gravatar.com.example/avatar/example?s=40",
+    "updated_at": "2016-12-01T07:54:10.297104+00:00",
+    "id": 1,
+    "groups": [2, 1],
+    "email": "developer@example.com"
+  },
+  "query_hash": "query_hash",
+  "api_key": "api_key",
+  "options": {
+    "parameters": [
+      {
+        "type": "number",
+        "name": "company_id",
+        "value": "424242",
+        "title": "company_id"
+      }
+    ]
+  },
+  "data_source_id": 1
+}

@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 require 'active_support'
 require 'active_support/core_ext'
-require 'forwardable'
 require 'zaru'
+require 'redash_exporter/exporter'
 
 module RedashExporter
   class Query
-    extend Forwardable
-    attr_accessor :sort_key
+    attr_accessor :sort_key, :data
+    include Comparable
 
     def initialize(raw)
-      @data = raw.symbolize_keys
-      @sort_key = :retrieved_at
+      @data = raw.deep_symbolize_keys
+      @sort_key = :id
     end
 
     def [](key)
@@ -18,37 +20,29 @@ module RedashExporter
     end
 
     def to_s
-      <<~EOS
-      /**
-       * #{@data[:name]}
-       * created at #{@data[:created_at]}
-       * last updated at #{@data[:updated_at]}
-       * created by #{@data.dig(:user, :name)} (#{@data.dig(:user, :email)})
-       **/
-
-      #{@data[:query]}
-      EOS
+      <<~SQL
+        /**
+         * #{@data[:name]}
+         *
+         * created at #{@data[:created_at]}
+         * last updated at #{@data[:updated_at]}
+         * created by #{@data.dig(:user, :name)} (#{@data.dig(:user, :email)})
+         **/
+         #{@data[:query]}
+      SQL
     end
 
-    def <=>
-      @data[@sort_key] || -1
+    def to_json(*_args)
+      JSON.generate(@data)
     end
 
-    def export(dir = '.')
+    def <=>(other)
+      self[@sort_key] <=> other[@sort_key]
+    end
+
+    def export(dir: '.', force: false, **)
       path = File.expand_path("#{dir}/#{file_name}")
-
-      if File.exist?(path)
-        puts "overwrite #{path} [yes(y),no(n)] ?"
-        ok = %w[yes y ok].include?(STDIN.gets.strip)
-        unless ok
-          puts "Not create #{path}."
-          return
-        end
-      end
-
-      File.open(path, 'w') do |file|
-        file.print to_s
-      end
+      Exporter.export(path, to_s, force: force)
     end
 
     private

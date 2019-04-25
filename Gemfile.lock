@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    redash_exporter (0.2.0)
-      activesupport
-      zaru
+    redash_exporter (0.2.1)
+      activesupport (~> 5.2.3)
+      zaru (~> 0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -13,12 +13,19 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    ast (2.4.0)
     byebug (11.0.1)
     concurrent-ruby (1.1.5)
     diff-lcs (1.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
+    jaro_winkler (1.5.2)
     minitest (5.11.3)
+    parallel (1.17.0)
+    parser (2.6.2.1)
+      ast (~> 2.4.0)
+    psych (3.1.0)
+    rainbow (3.0.0)
     rake (10.5.0)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
@@ -33,20 +40,31 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
+    rubocop (0.67.2)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.5, != 2.5.1.1)
+      psych (>= 3.1.0)
+      rainbow (>= 2.2.2, < 4.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 1.6)
+    ruby-progressbar (1.10.0)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    zaru (0.3.0)
+    unicode-display_width (1.5.0)
+    zaru (0.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 2.0)
-  byebug
+  bundler
+  byebug (~> 11.0.1)
   rake (~> 10.0)
   redash_exporter!
   rspec (~> 3.0)
+  rubocop (~> 0.67.2)
 
 BUNDLED WITH
-   2.0.0
+   1.17.2

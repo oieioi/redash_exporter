@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "redash_exporter/version"
 require "redash_exporter/queries"
 

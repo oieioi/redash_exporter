@@ -3,7 +3,28 @@
 require 'redash_exporter'
 require 'optparse'
 
-params = ARGV.getopts('', 'redash-url:', 'api-key:', "dest:#{Dir.pwd}")
+params = ARGV.getopts('',
+                      'redash-url:',
+                      'api-key:',
+                      "dest:#{Dir.pwd}",
+                      "overwrite",
+                      "version")
+
+if params['version']
+  puts RedashExporter::VERSION
+  return
+end
+
+if params['redash-url'].nil?
+  puts "--redash-url required!"
+  return
+end
+
+if params['api-key'].nil?
+  puts "--api-key required!"
+  return
+end
+
 queries = RedashExporter::Queries.new(params['redash-url'], params['api-key'], params['dest'])
 queries.fetch
-queries.export_all
+queries.export_all(force: params['overwrite'])
