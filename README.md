@@ -1,4 +1,6 @@
 [![Gem Version](https://badge.fury.io/rb/redash_exporter.svg)](https://badge.fury.io/rb/redash_exporter)
+[![Build Status](https://travis-ci.org/oieioi/redash_exporter.svg?branch=master)](https://travis-ci.org/oieioi/redash_exporter)
+[![Coverage Status](https://coveralls.io/repos/github/oieioi/redash_exporter/badge.svg?branch=master)](https://coveralls.io/github/oieioi/redash_exporter?branch=master)
 
 # RedashExporter
 
@@ -26,9 +28,9 @@ Shell
 
     $ redash_exporter --redash-url "http://your-redash-domain.example/<slug>" --api-key="your_api_key"
 
-With destination path
+With destination path and force to overwrite existed files
 
-    $ redash_exporter --redash-url "http://your-redash-domain.example/<slug>" --api-key="your_api_key" --dest=destination_directory
+    $ redash_exporter --redash-url "http://your-redash-domain.example/<slug>" --api-key="your_api_key" --dest=destination_directory --overwrite
 
 in Ruby Script
 
