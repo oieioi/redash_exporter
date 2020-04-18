@@ -1,3 +1,6 @@
+AllCops:
+  TargetRubyVersion: 2.6
+
 Style/AsciiComments:
   Enabled: false
 
@@ -5,6 +8,27 @@ Style/Documentation:
   Enabled: false
 
 Style/ClassVars:
+  Enabled: false
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: false
+
+Lint/RaiseException:
+  Enabled: false
+
+Lint/StructNewOverride:
+  Enabled: false
+
+Style/ExponentialNotation:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false
+
+Style/HashTransformKeys:
+  Enabled: false
+
+Style/HashTransformValues:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
@@ -18,7 +42,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 Metrics/MethodLength:

@@ -13,3 +13,4 @@
 .byebug_history
 *.sql
 tags
+Gemfile.lock
