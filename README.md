@@ -1,5 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/redash_exporter.svg)](https://badge.fury.io/rb/redash_exporter)
-[![Build Status](https://travis-ci.org/oieioi/redash_exporter.svg?branch=master)](https://travis-ci.org/oieioi/redash_exporter)
+![Ruby](https://github.com/oieioi/redash_exporter/workflows/Ruby/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/oieioi/redash_exporter/badge.svg?branch=master)](https://coveralls.io/github/oieioi/redash_exporter?branch=master)
 
 # RedashExporter
