@@ -26,16 +26,16 @@ Or install it yourself as:
 
 Shell
 
-    $ redash_exporter --redash-url "http://your-redash-domain.example/<slug>" --api-key="your_api_key"
+    $ redash_exporter --redash-url "http://your-redash-domain.example/your-path" --api-key="your_api_key"
 
-With destination path and force to overwrite existed files
+With destination path and to force to overwrite existed files
 
-    $ redash_exporter --redash-url "http://your-redash-domain.example/<slug>" --api-key="your_api_key" --dest=destination_directory --overwrite
+    $ redash_exporter --redash-url "http://your-redash-domain.example/your-path" --api-key="your_api_key" --dest=destination_directory_path --overwrite
 
 in Ruby Script
 
 ```ruby
-queries = RedashExporter::Queries.new 'https://your-redash-host.example/your_path', 'your_api_key', 'export_path'
+queries = RedashExporter::Queries.new 'https://your-redash-domain.example/your-path', 'your_api_key', 'export_path'
 queries.fetch
 queries.export_all
 
